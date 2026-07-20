@@ -1,10 +1,5 @@
 package ast
 
-import (
-	"github.com/graphql-go/graphql/language/kinds"
-)
-
-// DescribableNode are nodes that have descriptions associated with them.
 type DescribableNode interface {
 	GetDescription() *StringValue
 }
@@ -38,7 +33,6 @@ var _ TypeSystemDefinition = (TypeDefinition)(nil)
 var _ TypeSystemDefinition = (*TypeExtensionDefinition)(nil)
 var _ TypeSystemDefinition = (*DirectiveDefinition)(nil)
 
-// SchemaDefinition implements Node, Definition
 type SchemaDefinition struct {
 	Kind           string
 	Loc            *Location
@@ -47,38 +41,23 @@ type SchemaDefinition struct {
 }
 
 func NewSchemaDefinition(def *SchemaDefinition) *SchemaDefinition {
-	if def == nil {
-		def = &SchemaDefinition{}
-	}
-	return &SchemaDefinition{
-		Kind:           kinds.SchemaDefinition,
-		Loc:            def.Loc,
-		Directives:     def.Directives,
-		OperationTypes: def.OperationTypes,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (def *SchemaDefinition) GetKind() string {
-	return def.Kind
-}
+func (def *SchemaDefinition) GetKind() string { _ = "STUB: not implemented"; return "" }
 
-func (def *SchemaDefinition) GetLoc() *Location {
-	return def.Loc
-}
+func (def *SchemaDefinition) GetLoc() *Location { _ = "STUB: not implemented"; return nil }
 
 func (def *SchemaDefinition) GetVariableDefinitions() []*VariableDefinition {
-	return []*VariableDefinition{}
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (def *SchemaDefinition) GetSelectionSet() *SelectionSet {
-	return &SelectionSet{}
-}
+func (def *SchemaDefinition) GetSelectionSet() *SelectionSet { _ = "STUB: not implemented"; return nil }
 
-func (def *SchemaDefinition) GetOperation() string {
-	return ""
-}
+func (def *SchemaDefinition) GetOperation() string { _ = "STUB: not implemented"; return "" }
 
-// OperationTypeDefinition implements Node, Definition
 type OperationTypeDefinition struct {
 	Kind      string
 	Loc       *Location
@@ -87,26 +66,14 @@ type OperationTypeDefinition struct {
 }
 
 func NewOperationTypeDefinition(def *OperationTypeDefinition) *OperationTypeDefinition {
-	if def == nil {
-		def = &OperationTypeDefinition{}
-	}
-	return &OperationTypeDefinition{
-		Kind:      kinds.OperationTypeDefinition,
-		Loc:       def.Loc,
-		Operation: def.Operation,
-		Type:      def.Type,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (def *OperationTypeDefinition) GetKind() string {
-	return def.Kind
-}
+func (def *OperationTypeDefinition) GetKind() string { _ = "STUB: not implemented"; return "" }
 
-func (def *OperationTypeDefinition) GetLoc() *Location {
-	return def.Loc
-}
+func (def *OperationTypeDefinition) GetLoc() *Location { _ = "STUB: not implemented"; return nil }
 
-// ScalarDefinition implements Node, Definition
 type ScalarDefinition struct {
 	Kind        string
 	Loc         *Location
@@ -116,47 +83,27 @@ type ScalarDefinition struct {
 }
 
 func NewScalarDefinition(def *ScalarDefinition) *ScalarDefinition {
-	if def == nil {
-		def = &ScalarDefinition{}
-	}
-	return &ScalarDefinition{
-		Kind:        kinds.ScalarDefinition,
-		Loc:         def.Loc,
-		Description: def.Description,
-		Name:        def.Name,
-		Directives:  def.Directives,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (def *ScalarDefinition) GetKind() string {
-	return def.Kind
-}
+func (def *ScalarDefinition) GetKind() string { _ = "STUB: not implemented"; return "" }
 
-func (def *ScalarDefinition) GetLoc() *Location {
-	return def.Loc
-}
+func (def *ScalarDefinition) GetLoc() *Location { _ = "STUB: not implemented"; return nil }
 
-func (def *ScalarDefinition) GetName() *Name {
-	return def.Name
-}
+func (def *ScalarDefinition) GetName() *Name { _ = "STUB: not implemented"; return nil }
 
 func (def *ScalarDefinition) GetVariableDefinitions() []*VariableDefinition {
-	return []*VariableDefinition{}
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (def *ScalarDefinition) GetSelectionSet() *SelectionSet {
-	return &SelectionSet{}
-}
+func (def *ScalarDefinition) GetSelectionSet() *SelectionSet { _ = "STUB: not implemented"; return nil }
 
-func (def *ScalarDefinition) GetOperation() string {
-	return ""
-}
+func (def *ScalarDefinition) GetOperation() string { _ = "STUB: not implemented"; return "" }
 
-func (def *ScalarDefinition) GetDescription() *StringValue {
-	return def.Description
-}
+func (def *ScalarDefinition) GetDescription() *StringValue { _ = "STUB: not implemented"; return nil }
 
-// ObjectDefinition implements Node, Definition
 type ObjectDefinition struct {
 	Kind        string
 	Loc         *Location
@@ -168,49 +115,27 @@ type ObjectDefinition struct {
 }
 
 func NewObjectDefinition(def *ObjectDefinition) *ObjectDefinition {
-	if def == nil {
-		def = &ObjectDefinition{}
-	}
-	return &ObjectDefinition{
-		Kind:        kinds.ObjectDefinition,
-		Loc:         def.Loc,
-		Name:        def.Name,
-		Description: def.Description,
-		Interfaces:  def.Interfaces,
-		Directives:  def.Directives,
-		Fields:      def.Fields,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (def *ObjectDefinition) GetKind() string {
-	return def.Kind
-}
+func (def *ObjectDefinition) GetKind() string { _ = "STUB: not implemented"; return "" }
 
-func (def *ObjectDefinition) GetLoc() *Location {
-	return def.Loc
-}
+func (def *ObjectDefinition) GetLoc() *Location { _ = "STUB: not implemented"; return nil }
 
-func (def *ObjectDefinition) GetName() *Name {
-	return def.Name
-}
+func (def *ObjectDefinition) GetName() *Name { _ = "STUB: not implemented"; return nil }
 
 func (def *ObjectDefinition) GetVariableDefinitions() []*VariableDefinition {
-	return []*VariableDefinition{}
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (def *ObjectDefinition) GetSelectionSet() *SelectionSet {
-	return &SelectionSet{}
-}
+func (def *ObjectDefinition) GetSelectionSet() *SelectionSet { _ = "STUB: not implemented"; return nil }
 
-func (def *ObjectDefinition) GetOperation() string {
-	return ""
-}
+func (def *ObjectDefinition) GetOperation() string { _ = "STUB: not implemented"; return "" }
 
-func (def *ObjectDefinition) GetDescription() *StringValue {
-	return def.Description
-}
+func (def *ObjectDefinition) GetDescription() *StringValue { _ = "STUB: not implemented"; return nil }
 
-// FieldDefinition implements Node
 type FieldDefinition struct {
 	Kind        string
 	Loc         *Location
@@ -222,33 +147,16 @@ type FieldDefinition struct {
 }
 
 func NewFieldDefinition(def *FieldDefinition) *FieldDefinition {
-	if def == nil {
-		def = &FieldDefinition{}
-	}
-	return &FieldDefinition{
-		Kind:        kinds.FieldDefinition,
-		Loc:         def.Loc,
-		Name:        def.Name,
-		Description: def.Description,
-		Arguments:   def.Arguments,
-		Type:        def.Type,
-		Directives:  def.Directives,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (def *FieldDefinition) GetKind() string {
-	return def.Kind
-}
+func (def *FieldDefinition) GetKind() string { _ = "STUB: not implemented"; return "" }
 
-func (def *FieldDefinition) GetLoc() *Location {
-	return def.Loc
-}
+func (def *FieldDefinition) GetLoc() *Location { _ = "STUB: not implemented"; return nil }
 
-func (def *FieldDefinition) GetDescription() *StringValue {
-	return def.Description
-}
+func (def *FieldDefinition) GetDescription() *StringValue { _ = "STUB: not implemented"; return nil }
 
-// InputValueDefinition implements Node
 type InputValueDefinition struct {
 	Kind         string
 	Loc          *Location
@@ -260,33 +168,19 @@ type InputValueDefinition struct {
 }
 
 func NewInputValueDefinition(def *InputValueDefinition) *InputValueDefinition {
-	if def == nil {
-		def = &InputValueDefinition{}
-	}
-	return &InputValueDefinition{
-		Kind:         kinds.InputValueDefinition,
-		Loc:          def.Loc,
-		Name:         def.Name,
-		Description:  def.Description,
-		Type:         def.Type,
-		DefaultValue: def.DefaultValue,
-		Directives:   def.Directives,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (def *InputValueDefinition) GetKind() string {
-	return def.Kind
-}
+func (def *InputValueDefinition) GetKind() string { _ = "STUB: not implemented"; return "" }
 
-func (def *InputValueDefinition) GetLoc() *Location {
-	return def.Loc
-}
+func (def *InputValueDefinition) GetLoc() *Location { _ = "STUB: not implemented"; return nil }
 
 func (def *InputValueDefinition) GetDescription() *StringValue {
-	return def.Description
+	_ = "STUB: not implemented"
+	return nil
 }
 
-// InterfaceDefinition implements Node, Definition
 type InterfaceDefinition struct {
 	Kind        string
 	Loc         *Location
@@ -297,48 +191,33 @@ type InterfaceDefinition struct {
 }
 
 func NewInterfaceDefinition(def *InterfaceDefinition) *InterfaceDefinition {
-	if def == nil {
-		def = &InterfaceDefinition{}
-	}
-	return &InterfaceDefinition{
-		Kind:        kinds.InterfaceDefinition,
-		Loc:         def.Loc,
-		Name:        def.Name,
-		Description: def.Description,
-		Directives:  def.Directives,
-		Fields:      def.Fields,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (def *InterfaceDefinition) GetKind() string {
-	return def.Kind
-}
+func (def *InterfaceDefinition) GetKind() string { _ = "STUB: not implemented"; return "" }
 
-func (def *InterfaceDefinition) GetLoc() *Location {
-	return def.Loc
-}
+func (def *InterfaceDefinition) GetLoc() *Location { _ = "STUB: not implemented"; return nil }
 
-func (def *InterfaceDefinition) GetName() *Name {
-	return def.Name
-}
+func (def *InterfaceDefinition) GetName() *Name { _ = "STUB: not implemented"; return nil }
 
 func (def *InterfaceDefinition) GetVariableDefinitions() []*VariableDefinition {
-	return []*VariableDefinition{}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (def *InterfaceDefinition) GetSelectionSet() *SelectionSet {
-	return &SelectionSet{}
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (def *InterfaceDefinition) GetOperation() string {
-	return ""
-}
+func (def *InterfaceDefinition) GetOperation() string { _ = "STUB: not implemented"; return "" }
 
 func (def *InterfaceDefinition) GetDescription() *StringValue {
-	return def.Description
+	_ = "STUB: not implemented"
+	return nil
 }
 
-// UnionDefinition implements Node, Definition
 type UnionDefinition struct {
 	Kind        string
 	Loc         *Location
@@ -349,48 +228,27 @@ type UnionDefinition struct {
 }
 
 func NewUnionDefinition(def *UnionDefinition) *UnionDefinition {
-	if def == nil {
-		def = &UnionDefinition{}
-	}
-	return &UnionDefinition{
-		Kind:        kinds.UnionDefinition,
-		Loc:         def.Loc,
-		Name:        def.Name,
-		Description: def.Description,
-		Directives:  def.Directives,
-		Types:       def.Types,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (def *UnionDefinition) GetKind() string {
-	return def.Kind
-}
+func (def *UnionDefinition) GetKind() string { _ = "STUB: not implemented"; return "" }
 
-func (def *UnionDefinition) GetLoc() *Location {
-	return def.Loc
-}
+func (def *UnionDefinition) GetLoc() *Location { _ = "STUB: not implemented"; return nil }
 
-func (def *UnionDefinition) GetName() *Name {
-	return def.Name
-}
+func (def *UnionDefinition) GetName() *Name { _ = "STUB: not implemented"; return nil }
 
 func (def *UnionDefinition) GetVariableDefinitions() []*VariableDefinition {
-	return []*VariableDefinition{}
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (def *UnionDefinition) GetSelectionSet() *SelectionSet {
-	return &SelectionSet{}
-}
+func (def *UnionDefinition) GetSelectionSet() *SelectionSet { _ = "STUB: not implemented"; return nil }
 
-func (def *UnionDefinition) GetOperation() string {
-	return ""
-}
+func (def *UnionDefinition) GetOperation() string { _ = "STUB: not implemented"; return "" }
 
-func (def *UnionDefinition) GetDescription() *StringValue {
-	return def.Description
-}
+func (def *UnionDefinition) GetDescription() *StringValue { _ = "STUB: not implemented"; return nil }
 
-// EnumDefinition implements Node, Definition
 type EnumDefinition struct {
 	Kind        string
 	Loc         *Location
@@ -400,49 +258,25 @@ type EnumDefinition struct {
 	Values      []*EnumValueDefinition
 }
 
-func NewEnumDefinition(def *EnumDefinition) *EnumDefinition {
-	if def == nil {
-		def = &EnumDefinition{}
-	}
-	return &EnumDefinition{
-		Kind:        kinds.EnumDefinition,
-		Loc:         def.Loc,
-		Name:        def.Name,
-		Description: def.Description,
-		Directives:  def.Directives,
-		Values:      def.Values,
-	}
-}
+func NewEnumDefinition(def *EnumDefinition) *EnumDefinition { _ = "STUB: not implemented"; return nil }
 
-func (def *EnumDefinition) GetKind() string {
-	return def.Kind
-}
+func (def *EnumDefinition) GetKind() string { _ = "STUB: not implemented"; return "" }
 
-func (def *EnumDefinition) GetLoc() *Location {
-	return def.Loc
-}
+func (def *EnumDefinition) GetLoc() *Location { _ = "STUB: not implemented"; return nil }
 
-func (def *EnumDefinition) GetName() *Name {
-	return def.Name
-}
+func (def *EnumDefinition) GetName() *Name { _ = "STUB: not implemented"; return nil }
 
 func (def *EnumDefinition) GetVariableDefinitions() []*VariableDefinition {
-	return []*VariableDefinition{}
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (def *EnumDefinition) GetSelectionSet() *SelectionSet {
-	return &SelectionSet{}
-}
+func (def *EnumDefinition) GetSelectionSet() *SelectionSet { _ = "STUB: not implemented"; return nil }
 
-func (def *EnumDefinition) GetOperation() string {
-	return ""
-}
+func (def *EnumDefinition) GetOperation() string { _ = "STUB: not implemented"; return "" }
 
-func (def *EnumDefinition) GetDescription() *StringValue {
-	return def.Description
-}
+func (def *EnumDefinition) GetDescription() *StringValue { _ = "STUB: not implemented"; return nil }
 
-// EnumValueDefinition implements Node, Definition
 type EnumValueDefinition struct {
 	Kind        string
 	Loc         *Location
@@ -452,31 +286,19 @@ type EnumValueDefinition struct {
 }
 
 func NewEnumValueDefinition(def *EnumValueDefinition) *EnumValueDefinition {
-	if def == nil {
-		def = &EnumValueDefinition{}
-	}
-	return &EnumValueDefinition{
-		Kind:        kinds.EnumValueDefinition,
-		Loc:         def.Loc,
-		Name:        def.Name,
-		Description: def.Description,
-		Directives:  def.Directives,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (def *EnumValueDefinition) GetKind() string {
-	return def.Kind
-}
+func (def *EnumValueDefinition) GetKind() string { _ = "STUB: not implemented"; return "" }
 
-func (def *EnumValueDefinition) GetLoc() *Location {
-	return def.Loc
-}
+func (def *EnumValueDefinition) GetLoc() *Location { _ = "STUB: not implemented"; return nil }
 
 func (def *EnumValueDefinition) GetDescription() *StringValue {
-	return def.Description
+	_ = "STUB: not implemented"
+	return nil
 }
 
-// InputObjectDefinition implements Node, Definition
 type InputObjectDefinition struct {
 	Kind        string
 	Loc         *Location
@@ -487,43 +309,29 @@ type InputObjectDefinition struct {
 }
 
 func NewInputObjectDefinition(def *InputObjectDefinition) *InputObjectDefinition {
-	if def == nil {
-		def = &InputObjectDefinition{}
-	}
-	return &InputObjectDefinition{
-		Kind:        kinds.InputObjectDefinition,
-		Loc:         def.Loc,
-		Name:        def.Name,
-		Description: def.Description,
-		Directives:  def.Directives,
-		Fields:      def.Fields,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (def *InputObjectDefinition) GetKind() string {
-	return def.Kind
-}
+func (def *InputObjectDefinition) GetKind() string { _ = "STUB: not implemented"; return "" }
 
-func (def *InputObjectDefinition) GetLoc() *Location {
-	return def.Loc
-}
+func (def *InputObjectDefinition) GetLoc() *Location { _ = "STUB: not implemented"; return nil }
 
-func (def *InputObjectDefinition) GetName() *Name {
-	return def.Name
-}
+func (def *InputObjectDefinition) GetName() *Name { _ = "STUB: not implemented"; return nil }
 
 func (def *InputObjectDefinition) GetVariableDefinitions() []*VariableDefinition {
-	return []*VariableDefinition{}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (def *InputObjectDefinition) GetSelectionSet() *SelectionSet {
-	return &SelectionSet{}
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (def *InputObjectDefinition) GetOperation() string {
-	return ""
-}
+func (def *InputObjectDefinition) GetOperation() string { _ = "STUB: not implemented"; return "" }
 
 func (def *InputObjectDefinition) GetDescription() *StringValue {
-	return def.Description
+	_ = "STUB: not implemented"
+	return nil
 }

@@ -5,9 +5,6 @@ import (
 
 	"github.com/graphql-go/graphql"
 	"github.com/graphql-go/graphql/gqlerrors"
-	"github.com/graphql-go/graphql/language/location"
-	"github.com/graphql-go/graphql/language/parser"
-	"github.com/graphql-go/graphql/language/source"
 )
 
 var TestSchema *graphql.Schema
@@ -258,7 +255,7 @@ func init() {
 			humanType,
 		},
 		ResolveType: func(p graphql.ResolveTypeParams) *graphql.Object {
-			// not used for validation
+
 			return nil
 		},
 	})
@@ -269,7 +266,7 @@ func init() {
 			humanType,
 		},
 		ResolveType: func(p graphql.ResolveTypeParams) *graphql.Object {
-			// not used for validation
+
 			return nil
 		},
 	})
@@ -296,9 +293,7 @@ func init() {
 	})
 	var complicatedArgs = graphql.NewObject(graphql.ObjectConfig{
 		Name: "ComplicatedArgs",
-		// TODO List
-		// TODO Coercion
-		// TODO NotNulls
+
 		Fields: graphql.Fields{
 			"intArgField": &graphql.Field{
 				Type: graphql.String,
@@ -546,78 +541,36 @@ func init() {
 
 }
 func expectValidRule(t *testing.T, schema *graphql.Schema, rules []graphql.ValidationRuleFn, queryString string) {
-	source := source.NewSource(&source.Source{
-		Body: []byte(queryString),
-	})
-	AST, err := parser.Parse(parser.ParseParams{Source: source})
-	if err != nil {
-		t.Fatal(err)
-	}
-	result := graphql.ValidateDocument(schema, AST, rules)
-	if len(result.Errors) > 0 {
-		t.Fatalf("Should validate, got %v", result.Errors)
-	}
-	if result.IsValid != true {
-		t.Fatalf("IsValid should be true, got %v", result.IsValid)
-	}
-
+	_ = "STUB: not implemented"
+	return
 }
+
 func expectInvalidRule(t *testing.T, schema *graphql.Schema, rules []graphql.ValidationRuleFn, queryString string, expectedErrors []gqlerrors.FormattedError) {
-	source := source.NewSource(&source.Source{
-		Body: []byte(queryString),
-	})
-	AST, err := parser.Parse(parser.ParseParams{Source: source})
-	if err != nil {
-		t.Fatal(err)
-	}
-	result := graphql.ValidateDocument(schema, AST, rules)
-	if len(result.Errors) != len(expectedErrors) {
-		t.Fatalf("Should have %v errors, got %v", len(expectedErrors), len(result.Errors))
-	}
-	if result.IsValid != false {
-		t.Fatalf("IsValid should be false, got %v", result.IsValid)
-	}
-	for _, expectedErr := range expectedErrors {
-		found := false
-		for _, err := range result.Errors {
-			if EqualFormattedError(expectedErr, err) {
-				found = true
-				break
-			}
-		}
-		if found == false {
-			t.Fatalf("Unexpected result, Diff: %v", Diff(expectedErrors, result.Errors))
-		}
-	}
+	_ = "STUB: not implemented"
+	return
+}
 
-}
 func ExpectPassesRule(t *testing.T, rule graphql.ValidationRuleFn, queryString string) {
-	expectValidRule(t, TestSchema, []graphql.ValidationRuleFn{rule}, queryString)
+	_ = "STUB: not implemented"
+	return
 }
+
 func ExpectFailsRule(t *testing.T, rule graphql.ValidationRuleFn, queryString string, expectedErrors []gqlerrors.FormattedError) {
-	expectInvalidRule(t, TestSchema, []graphql.ValidationRuleFn{rule}, queryString, expectedErrors)
+	_ = "STUB: not implemented"
+	return
 }
+
 func ExpectFailsRuleWithSchema(t *testing.T, schema *graphql.Schema, rule graphql.ValidationRuleFn, queryString string, expectedErrors []gqlerrors.FormattedError) {
-	expectInvalidRule(t, schema, []graphql.ValidationRuleFn{rule}, queryString, expectedErrors)
+	_ = "STUB: not implemented"
+	return
 }
+
 func ExpectPassesRuleWithSchema(t *testing.T, schema *graphql.Schema, rule graphql.ValidationRuleFn, queryString string) {
-	expectValidRule(t, schema, []graphql.ValidationRuleFn{rule}, queryString)
+	_ = "STUB: not implemented"
+	return
 }
+
 func RuleError(message string, locs ...int) gqlerrors.FormattedError {
-	locations := []location.SourceLocation{}
-	for i := 0; i < len(locs); i += 2 {
-		line := locs[i]
-		col := 0
-		if i+1 < len(locs) {
-			col = locs[i+1]
-		}
-		locations = append(locations, location.SourceLocation{
-			Line:   line,
-			Column: col,
-		})
-	}
-	return gqlerrors.FormattedError{
-		Message:   message,
-		Locations: locations,
-	}
+	_ = "STUB: not implemented"
+	return *new(gqlerrors.FormattedError)
 }

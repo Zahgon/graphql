@@ -30,9 +30,6 @@ var FieldBarType = graphql.NewObject(graphql.ObjectConfig{
 	},
 })
 
-// QueryType fields: `concurrentFieldFoo` and `concurrentFieldBar` are resolved
-// concurrently because they belong to the same field-level and their `Resolve`
-// function returns a function (thunk).
 var QueryType = graphql.NewObject(graphql.ObjectConfig{
 	Name: "Query",
 	Fields: graphql.Fields{
@@ -93,16 +90,5 @@ func main() {
 		log.Fatal(err)
 	}
 	fmt.Printf("%s", b)
-	/*
-		{
-		  "data": {
-		    "concurrentFieldBar": {
-		      "name": "Bar's name"
-		    },
-		    "concurrentFieldFoo": {
-		      "name": "Foo's name"
-		    }
-		  }
-		}
-	*/
+
 }

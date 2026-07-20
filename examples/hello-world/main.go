@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	// Schema
+
 	fields := graphql.Fields{
 		"hello": &graphql.Field{
 			Type: graphql.String,
@@ -25,7 +25,6 @@ func main() {
 		log.Fatalf("failed to create new schema, error: %v", err)
 	}
 
-	// Query
 	query := `
 		{
 			hello
@@ -37,5 +36,5 @@ func main() {
 		log.Fatalf("failed to execute graphql operation, errors: %+v", r.Errors)
 	}
 	rJSON, _ := json.Marshal(r)
-	fmt.Printf("%s \n", rJSON) // {“data”:{“hello”:”world”}}
+	fmt.Printf("%s \n", rJSON)
 }

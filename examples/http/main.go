@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 
 	"github.com/graphql-go/graphql"
@@ -16,12 +15,6 @@ type user struct {
 
 var data map[string]user
 
-/*
-   Create User object type with fields "id" and "name" by using GraphQLObjectTypeConfig:
-       - Name: name of object type
-       - Fields: a map of fields by using GraphQLFields
-   Setup type of field use GraphQLFieldConfig
-*/
 var userType = graphql.NewObject(
 	graphql.ObjectConfig{
 		Name: "User",
@@ -36,15 +29,6 @@ var userType = graphql.NewObject(
 	},
 )
 
-/*
-   Create Query object type with fields "user" has type [userType] by using GraphQLObjectTypeConfig:
-       - Name: name of object type
-       - Fields: a map of fields by using GraphQLFields
-   Setup type of field use GraphQLFieldConfig to define:
-       - Type: type of field
-       - Args: arguments to query with current field
-       - Resolve: function to query data using params from [Args] and return value with current type
-*/
 var queryType = graphql.NewObject(
 	graphql.ObjectConfig{
 		Name: "Query",
@@ -74,14 +58,8 @@ var schema, _ = graphql.NewSchema(
 )
 
 func executeQuery(query string, schema graphql.Schema) *graphql.Result {
-	result := graphql.Do(graphql.Params{
-		Schema:        schema,
-		RequestString: query,
-	})
-	if len(result.Errors) > 0 {
-		fmt.Printf("wrong result, unexpected errors: %v", result.Errors)
-	}
-	return result
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func main() {
@@ -97,18 +75,7 @@ func main() {
 	http.ListenAndServe(":8080", nil)
 }
 
-//Helper function to import json from file to map
 func importJSONDataFromFile(fileName string, result interface{}) (isOK bool) {
-	isOK = true
-	content, err := ioutil.ReadFile(fileName)
-	if err != nil {
-		fmt.Print("Error:", err)
-		isOK = false
-	}
-	err = json.Unmarshal(content, result)
-	if err != nil {
-		isOK = false
-		fmt.Print("Error:", err)
-	}
-	return
+	_ = "STUB: not implemented"
+	return false
 }

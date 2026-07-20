@@ -5,151 +5,36 @@ import (
 	"strconv"
 	"strings"
 
-	"reflect"
-
 	"github.com/graphql-go/graphql/language/ast"
 	"github.com/graphql-go/graphql/language/visitor"
 )
 
 func getMapValue(m map[string]interface{}, key string) interface{} {
-	tokens := strings.Split(key, ".")
-	valMap := m
-	for _, token := range tokens {
-		v, ok := valMap[token]
-		if !ok {
-			return nil
-		}
-		switch v := v.(type) {
-		case []interface{}:
-			return v
-		case map[string]interface{}:
-			valMap = v
-			continue
-		default:
-			return v
-		}
-	}
-	return valMap
+	_ = "STUB: not implemented"
+	return nil
 }
+
 func getMapSliceValue(m map[string]interface{}, key string) []interface{} {
-	tokens := strings.Split(key, ".")
-	valMap := m
-	for _, token := range tokens {
-		v, ok := valMap[token]
-		if !ok {
-			return []interface{}{}
-		}
-		switch v := v.(type) {
-		case []interface{}:
-			return v
-		}
-		break
-	}
-	return []interface{}{}
+	_ = "STUB: not implemented"
+	return nil
 }
+
 func getMapValueString(m map[string]interface{}, key string) string {
-	tokens := strings.Split(key, ".")
-	valMap := m
-	for _, token := range tokens {
-		v, ok := valMap[token]
-		if !ok {
-			return ""
-		}
-		if v == nil {
-			return ""
-		}
-		switch v := v.(type) {
-		case map[string]interface{}:
-			valMap = v
-			continue
-		case string:
-			return v
-		default:
-			return fmt.Sprintf("%v", v)
-		}
-	}
+	_ = "STUB: not implemented"
 	return ""
 }
-func getDescription(raw interface{}) string {
-	var desc string
 
-	switch node := raw.(type) {
-	case ast.DescribableNode:
-		if sval := node.GetDescription(); sval != nil {
-			desc = sval.Value
-		}
-	case map[string]interface{}:
-		desc = getMapValueString(node, "Description.Value")
-	}
-	if desc != "" {
-		sep := ""
-		if strings.ContainsRune(desc, '\n') {
-			sep = "\n"
-		}
-		desc = join([]string{`"""`, desc, `"""`}, sep)
-	}
-	return desc
-}
+func getDescription(raw interface{}) string { _ = "STUB: not implemented"; return "" }
 
-func toSliceString(slice interface{}) []string {
-	if slice == nil {
-		return []string{}
-	}
-	res := []string{}
-	switch reflect.TypeOf(slice).Kind() {
-	case reflect.Slice:
-		s := reflect.ValueOf(slice)
-		for i := 0; i < s.Len(); i++ {
-			elem := s.Index(i)
-			elemInterface := elem.Interface()
-			if elem, ok := elemInterface.(string); ok {
-				res = append(res, elem)
-			}
-		}
-		return res
-	default:
-		return res
-	}
-}
+func toSliceString(slice interface{}) []string { _ = "STUB: not implemented"; return nil }
 
-func join(str []string, sep string) string {
-	ss := []string{}
-	// filter out empty strings
-	for _, s := range str {
-		if s == "" {
-			continue
-		}
-		ss = append(ss, s)
-	}
-	return strings.Join(ss, sep)
-}
+func join(str []string, sep string) string { _ = "STUB: not implemented"; return "" }
 
-func wrap(start, maybeString, end string) string {
-	if maybeString == "" {
-		return maybeString
-	}
-	return start + maybeString + end
-}
+func wrap(start, maybeString, end string) string { _ = "STUB: not implemented"; return "" }
 
-// Given array, print each item on its own line, wrapped in an indented "{ }" block.
-func block(maybeArray interface{}) string {
-	s := toSliceString(maybeArray)
-	if len(s) == 0 {
-		return "{}"
-	}
-	return indent("{\n"+join(s, "\n")) + "\n}"
-}
+func block(maybeArray interface{}) string { _ = "STUB: not implemented"; return "" }
 
-func indent(maybeString interface{}) string {
-	if maybeString == nil {
-		return ""
-	}
-	switch str := maybeString.(type) {
-	case string:
-		return strings.Replace(str, "\n", "\n  ", -1)
-	}
-	return ""
-}
+func indent(maybeString interface{}) string { _ = "STUB: not implemented"; return "" }
 
 var printDocASTReducer = map[string]visitor.VisitFunc{
 	"Name": func(p visitor.VisitFuncParams) (string, interface{}) {
@@ -171,7 +56,6 @@ var printDocASTReducer = map[string]visitor.VisitFunc{
 		return visitor.ActionNoChange, nil
 	},
 
-	// Document
 	"Document": func(p visitor.VisitFuncParams) (string, interface{}) {
 		switch node := p.Node.(type) {
 		case *ast.Document:
@@ -195,8 +79,7 @@ var printDocASTReducer = map[string]visitor.VisitFunc{
 			varDefs := wrap("(", join(toSliceString(node.VariableDefinitions), ", "), ")")
 			directives := join(toSliceString(node.Directives), " ")
 			selectionSet := fmt.Sprintf("%v", node.SelectionSet)
-			// Anonymous queries with no directives or variable definitions can use
-			// the query short form.
+
 			str := ""
 			if name == "" && directives == "" && varDefs == "" && op == ast.OperationTypeQuery {
 				str = selectionSet
@@ -304,7 +187,6 @@ var printDocASTReducer = map[string]visitor.VisitFunc{
 		return visitor.ActionNoChange, nil
 	},
 
-	// Fragments
 	"FragmentSpread": func(p visitor.VisitFuncParams) (string, interface{}) {
 		switch node := p.Node.(type) {
 		case *ast.InlineFragment:
@@ -353,7 +235,6 @@ var printDocASTReducer = map[string]visitor.VisitFunc{
 		return visitor.ActionNoChange, nil
 	},
 
-	// Value
 	"IntValue": func(p visitor.VisitFuncParams) (string, interface{}) {
 		switch node := p.Node.(type) {
 		case *ast.IntValue:
@@ -431,7 +312,6 @@ var printDocASTReducer = map[string]visitor.VisitFunc{
 		return visitor.ActionNoChange, nil
 	},
 
-	// Directive
 	"Directive": func(p visitor.VisitFuncParams) (string, interface{}) {
 		switch node := p.Node.(type) {
 		case *ast.Directive:
@@ -446,7 +326,6 @@ var printDocASTReducer = map[string]visitor.VisitFunc{
 		return visitor.ActionNoChange, nil
 	},
 
-	// Type
 	"Named": func(p visitor.VisitFuncParams) (string, interface{}) {
 		switch node := p.Node.(type) {
 		case *ast.Named:
@@ -475,7 +354,6 @@ var printDocASTReducer = map[string]visitor.VisitFunc{
 		return visitor.ActionNoChange, nil
 	},
 
-	// Type System Definitions
 	"SchemaDefinition": func(p visitor.VisitFuncParams) (string, interface{}) {
 		switch node := p.Node.(type) {
 		case *ast.SchemaDefinition:
@@ -941,15 +819,4 @@ var printDocASTReducer = map[string]visitor.VisitFunc{
 	},
 }
 
-func Print(astNode ast.Node) (printed interface{}) {
-	defer func() interface{} {
-		if r := recover(); r != nil {
-			return fmt.Sprintf("%v", astNode)
-		}
-		return printed
-	}()
-	printed = visitor.Visit(astNode, &visitor.VisitorOptions{
-		LeaveKindMap: printDocASTReducer,
-	}, nil)
-	return printed
-}
+func Print(astNode ast.Node) (printed interface{}) { _ = "STUB: not implemented"; return nil }

@@ -13,18 +13,14 @@ type CustomID struct {
 	value string
 }
 
-func (id *CustomID) String() string {
-	return id.value
-}
+func (id *CustomID) String() string { _ = "STUB: not implemented"; return "" }
 
-func NewCustomID(v string) *CustomID {
-	return &CustomID{value: v}
-}
+func NewCustomID(v string) *CustomID { _ = "STUB: not implemented"; return nil }
 
 var CustomScalarType = graphql.NewScalar(graphql.ScalarConfig{
 	Name:        "CustomScalarType",
 	Description: "The `CustomScalarType` scalar type represents an ID Object.",
-	// Serialize serializes `CustomID` to string.
+
 	Serialize: func(value interface{}) interface{} {
 		switch value := value.(type) {
 		case CustomID:
@@ -36,7 +32,7 @@ var CustomScalarType = graphql.NewScalar(graphql.ScalarConfig{
 			return nil
 		}
 	},
-	// ParseValue parses GraphQL variables from `string` to `CustomID`.
+
 	ParseValue: func(value interface{}) interface{} {
 		switch value := value.(type) {
 		case string:
@@ -47,7 +43,7 @@ var CustomScalarType = graphql.NewScalar(graphql.ScalarConfig{
 			return nil
 		}
 	},
-	// ParseLiteral parses GraphQL AST value to `CustomID`.
+
 	ParseLiteral: func(valueAST ast.Value) interface{} {
 		switch valueAST := valueAST.(type) {
 		case *ast.StringValue:
@@ -84,8 +80,7 @@ func main() {
 						},
 					},
 					Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-						// id := p.Args["id"]
-						// log.Printf("id from arguments: %+v", id)
+
 						customers := []Customer{
 							Customer{ID: NewCustomID("fb278f2a4a13f")},
 						}
@@ -105,24 +100,7 @@ func main() {
 			}
 		}
 	`
-	/*
-		queryWithVariable := `
-			query($id: CustomScalarType) {
-				customers(id: $id) {
-					id
-				}
-			}
-		`
-	*/
-	/*
-		queryWithArgument := `
-			query {
-				customers(id: "5b42ba57289") {
-					id
-				}
-			}
-		`
-	*/
+
 	result := graphql.Do(graphql.Params{
 		Schema:        schema,
 		RequestString: query,

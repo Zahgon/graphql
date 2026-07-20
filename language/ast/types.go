@@ -1,103 +1,53 @@
 package ast
 
-import (
-	"github.com/graphql-go/graphql/language/kinds"
-)
-
 type Type interface {
 	GetKind() string
 	GetLoc() *Location
 	String() string
 }
 
-// Ensure that all value types implements Value interface
 var _ Type = (*Named)(nil)
 var _ Type = (*List)(nil)
 var _ Type = (*NonNull)(nil)
 
-// Named implements Node, Type
 type Named struct {
 	Kind string
 	Loc  *Location
 	Name *Name
 }
 
-func NewNamed(t *Named) *Named {
-	if t == nil {
-		t = &Named{}
-	}
-	t.Kind = kinds.Named
-	return t
-}
+func NewNamed(t *Named) *Named { _ = "STUB: not implemented"; return nil }
 
-func (t *Named) GetKind() string {
-	return t.Kind
-}
+func (t *Named) GetKind() string { _ = "STUB: not implemented"; return "" }
 
-func (t *Named) GetLoc() *Location {
-	return t.Loc
-}
+func (t *Named) GetLoc() *Location { _ = "STUB: not implemented"; return nil }
 
-func (t *Named) String() string {
-	return t.GetKind()
-}
+func (t *Named) String() string { _ = "STUB: not implemented"; return "" }
 
-// List implements Node, Type
 type List struct {
 	Kind string
 	Loc  *Location
 	Type Type
 }
 
-func NewList(t *List) *List {
-	if t == nil {
-		t = &List{}
-	}
-	return &List{
-		Kind: kinds.List,
-		Loc:  t.Loc,
-		Type: t.Type,
-	}
-}
+func NewList(t *List) *List { _ = "STUB: not implemented"; return nil }
 
-func (t *List) GetKind() string {
-	return t.Kind
-}
+func (t *List) GetKind() string { _ = "STUB: not implemented"; return "" }
 
-func (t *List) GetLoc() *Location {
-	return t.Loc
-}
+func (t *List) GetLoc() *Location { _ = "STUB: not implemented"; return nil }
 
-func (t *List) String() string {
-	return t.GetKind()
-}
+func (t *List) String() string { _ = "STUB: not implemented"; return "" }
 
-// NonNull implements Node, Type
 type NonNull struct {
 	Kind string
 	Loc  *Location
 	Type Type
 }
 
-func NewNonNull(t *NonNull) *NonNull {
-	if t == nil {
-		t = &NonNull{}
-	}
-	return &NonNull{
-		Kind: kinds.NonNull,
-		Loc:  t.Loc,
-		Type: t.Type,
-	}
-}
+func NewNonNull(t *NonNull) *NonNull { _ = "STUB: not implemented"; return nil }
 
-func (t *NonNull) GetKind() string {
-	return t.Kind
-}
+func (t *NonNull) GetKind() string { _ = "STUB: not implemented"; return "" }
 
-func (t *NonNull) GetLoc() *Location {
-	return t.Loc
-}
+func (t *NonNull) GetLoc() *Location { _ = "STUB: not implemented"; return nil }
 
-func (t *NonNull) String() string {
-	return t.GetKind()
-}
+func (t *NonNull) String() string { _ = "STUB: not implemented"; return "" }

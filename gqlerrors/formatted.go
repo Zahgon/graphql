@@ -1,8 +1,6 @@
 package gqlerrors
 
 import (
-	"errors"
-
 	"github.com/graphql-go/graphql/language/location"
 )
 
@@ -19,51 +17,15 @@ type FormattedError struct {
 	originalError error
 }
 
-func (g FormattedError) OriginalError() error {
-	return g.originalError
-}
+func (g FormattedError) OriginalError() error { _ = "STUB: not implemented"; return nil }
 
-func (g FormattedError) Error() string {
-	return g.Message
-}
+func (g FormattedError) Error() string { _ = "STUB: not implemented"; return "" }
 
 func NewFormattedError(message string) FormattedError {
-	err := errors.New(message)
-	return FormatError(err)
+	_ = "STUB: not implemented"
+	return *new(FormattedError)
 }
 
-func FormatError(err error) FormattedError {
-	switch err := err.(type) {
-	case FormattedError:
-		return err
-	case *Error:
-		ret := FormattedError{
-			Message:       err.Error(),
-			Locations:     err.Locations,
-			Path:          err.Path,
-			originalError: err,
-		}
-		if err := err.OriginalError; err != nil {
-			if extended, ok := err.(ExtendedError); ok {
-				ret.Extensions = extended.Extensions()
-			}
-		}
-		return ret
-	case Error:
-		return FormatError(&err)
-	default:
-		return FormattedError{
-			Message:       err.Error(),
-			Locations:     []location.SourceLocation{},
-			originalError: err,
-		}
-	}
-}
+func FormatError(err error) FormattedError { _ = "STUB: not implemented"; return *new(FormattedError) }
 
-func FormatErrors(errs ...error) []FormattedError {
-	formattedErrors := []FormattedError{}
-	for _, err := range errs {
-		formattedErrors = append(formattedErrors, FormatError(err))
-	}
-	return formattedErrors
-}
+func FormatErrors(errs ...error) []FormattedError { _ = "STUB: not implemented"; return nil }
