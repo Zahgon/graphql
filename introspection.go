@@ -2,7 +2,6 @@ package graphql
 
 import (
 	"fmt"
-	"reflect"
 	"sort"
 
 	"github.com/graphql-go/graphql/language/ast"
@@ -20,39 +19,26 @@ const (
 	TypeKindNonNull     = "NON_NULL"
 )
 
-// SchemaType is type definition for __Schema
 var SchemaType *Object
 
-// DirectiveType is type definition for __Directive
 var DirectiveType *Object
 
-// TypeType is type definition for __Type
 var TypeType *Object
 
-// FieldType is type definition for __Field
 var FieldType *Object
 
-// InputValueType is type definition for __InputValue
 var InputValueType *Object
 
-// EnumValueType is type definition for __EnumValue
 var EnumValueType *Object
 
-// TypeKindEnumType is type definition for __TypeKind
 var TypeKindEnumType *Enum
 
-// DirectiveLocationEnumType is type definition for __DirectiveLocation
 var DirectiveLocationEnumType *Enum
 
-// Meta-field definitions.
-
-// SchemaMetaFieldDef Meta field definition for Schema
 var SchemaMetaFieldDef *FieldDefinition
 
-// TypeMetaFieldDef Meta field definition for types
 var TypeMetaFieldDef *FieldDefinition
 
-// TypeNameMetaFieldDef Meta field definition for type names
 var TypeNameMetaFieldDef *FieldDefinition
 
 func init() {
@@ -183,7 +169,6 @@ func init() {
 		},
 	})
 
-	// Note: some fields (for e.g "fields", "interfaces") are defined later due to cyclic reference
 	TypeType = NewObject(ObjectConfig{
 		Name: "__Type",
 		Description: "The fundamental unit of any GraphQL Schema is the type. There are " +
@@ -349,8 +334,7 @@ func init() {
 					NewNonNull(InputValueType),
 				)),
 			},
-			// NOTE: the following three fields are deprecated and are no longer part
-			// of the GraphQL specification.
+
 			"onOperation": &Field{
 				DeprecationReason: "Use `locations`.",
 				Type:              NewNonNull(Boolean),
@@ -517,8 +501,6 @@ func init() {
 		},
 	})
 
-	// Again, adding field configs to __Type that have cyclic reference here
-	// because golang don't like them too much during init/compile-time
 	TypeType.AddFieldConfig("fields", &Field{
 		Type: NewList(NewNonNull(FieldType)),
 		Args: FieldConfigArgument{
@@ -634,8 +616,6 @@ func init() {
 	InputValueType.ensureCache()
 	EnumValueType.ensureCache()
 
-	// Note that these are FieldDefinition and not FieldConfig,
-	// so the format for args is different.
 	SchemaMetaFieldDef = &FieldDefinition{
 		Name:        "__schema",
 		Type:        NewNonNull(SchemaType),
@@ -676,102 +656,7 @@ func init() {
 
 }
 
-// Produces a GraphQL Value AST given a Golang value.
-//
-// Optionally, a GraphQL type may be provided, which will be used to
-// disambiguate between value primitives.
-//
-// | JSON Value    | GraphQL Value        |
-// | ------------- | -------------------- |
-// | Object        | Input Object         |
-// | Array         | List                 |
-// | Boolean       | Boolean              |
-// | String        | String / Enum Value  |
-// | Number        | Int / Float          |
-
 func astFromValue(value interface{}, ttype Type) ast.Value {
-
-	if ttype, ok := ttype.(*NonNull); ok {
-		// Note: we're not checking that the result is non-null.
-		// This function is not responsible for validating the input value.
-		val := astFromValue(value, ttype.OfType)
-		return val
-	}
-	if isNullish(value) {
-		return nil
-	}
-	valueVal := reflect.ValueOf(value)
-	if valueVal.Type().Kind() == reflect.Ptr {
-		valueVal = valueVal.Elem()
-	}
-
-	// Convert Golang slice to GraphQL list. If the Type is a list, but
-	// the value is not an array, convert the value using the list's item type.
-	if ttype, ok := ttype.(*List); ok {
-		if valueVal.Type().Kind() == reflect.Slice {
-			itemType := ttype.OfType
-			values := []ast.Value{}
-			for i := 0; i < valueVal.Len(); i++ {
-				item := valueVal.Index(i).Interface()
-				itemAST := astFromValue(item, itemType)
-				if itemAST != nil {
-					values = append(values, itemAST)
-				}
-			}
-			return ast.NewListValue(&ast.ListValue{
-				Values: values,
-			})
-		}
-		// Because GraphQL will accept single values as a "list of one" when
-		// expecting a list, if there's a non-array value and an expected list type,
-		// create an AST using the list's item type.
-		val := astFromValue(value, ttype.OfType)
-		return val
-	}
-
-	if valueVal.Type().Kind() == reflect.Map {
-		// TODO: implement astFromValue from Map to Value
-	}
-
-	if value, ok := value.(bool); ok {
-		return ast.NewBooleanValue(&ast.BooleanValue{
-			Value: value,
-		})
-	}
-	if value, ok := value.(int); ok {
-		if ttype == Float {
-			return ast.NewIntValue(&ast.IntValue{
-				Value: fmt.Sprintf("%v.0", value),
-			})
-		}
-		return ast.NewIntValue(&ast.IntValue{
-			Value: fmt.Sprintf("%v", value),
-		})
-	}
-	if value, ok := value.(float32); ok {
-		return ast.NewFloatValue(&ast.FloatValue{
-			Value: fmt.Sprintf("%v", value),
-		})
-	}
-	if value, ok := value.(float64); ok {
-		return ast.NewFloatValue(&ast.FloatValue{
-			Value: fmt.Sprintf("%v", value),
-		})
-	}
-
-	if value, ok := value.(string); ok {
-		if _, ok := ttype.(*Enum); ok {
-			return ast.NewEnumValue(&ast.EnumValue{
-				Value: fmt.Sprintf("%v", value),
-			})
-		}
-		return ast.NewStringValue(&ast.StringValue{
-			Value: fmt.Sprintf("%v", value),
-		})
-	}
-
-	// fallback, treat as string
-	return ast.NewStringValue(&ast.StringValue{
-		Value: fmt.Sprintf("%v", value),
-	})
+	_ = "STUB: not implemented"
+	return *new(ast.Value)
 }

@@ -1,8 +1,6 @@
 package main
 
 import (
-	"context"
-	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -39,22 +37,7 @@ var queryType = graphql.NewObject(
 		},
 	})
 
-func graphqlHandler(w http.ResponseWriter, r *http.Request) {
-	user := struct {
-		ID   int    `json:"id"`
-		Name string `json:"name"`
-	}{1, "cool user"}
-	result := graphql.Do(graphql.Params{
-		Schema:        Schema,
-		RequestString: r.URL.Query().Get("query"),
-		Context:       context.WithValue(context.Background(), "currentUser", user),
-	})
-	if len(result.Errors) > 0 {
-		log.Printf("wrong result, unexpected errors: %v", result.Errors)
-		return
-	}
-	json.NewEncoder(w).Encode(result)
-}
+func graphqlHandler(w http.ResponseWriter, r *http.Request) { _ = "STUB: not implemented"; return }
 
 func main() {
 	http.HandleFunc("/graphql", graphqlHandler)

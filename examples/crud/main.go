@@ -10,7 +10,6 @@ import (
 	"github.com/graphql-go/graphql"
 )
 
-// Product contains information about one product
 type Product struct {
 	ID    int64   `json:"id"`
 	Name  string  `json:"name"`
@@ -63,9 +62,7 @@ var queryType = graphql.NewObject(
 	graphql.ObjectConfig{
 		Name: "Query",
 		Fields: graphql.Fields{
-			/* Get (read) single product by id
-			   http://localhost:8080/product?query={product(id:1){name,info,price}}
-			*/
+
 			"product": &graphql.Field{
 				Type:        productType,
 				Description: "Get product by id",
@@ -77,7 +74,7 @@ var queryType = graphql.NewObject(
 				Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 					id, ok := p.Args["id"].(int)
 					if ok {
-						// Find product
+
 						for _, product := range products {
 							if int(product.ID) == id {
 								return product, nil
@@ -87,9 +84,7 @@ var queryType = graphql.NewObject(
 					return nil, nil
 				},
 			},
-			/* Get (read) product list
-			   http://localhost:8080/product?query={list{id,name,info,price}}
-			*/
+
 			"list": &graphql.Field{
 				Type:        graphql.NewList(productType),
 				Description: "Get product list",
@@ -103,9 +98,7 @@ var queryType = graphql.NewObject(
 var mutationType = graphql.NewObject(graphql.ObjectConfig{
 	Name: "Mutation",
 	Fields: graphql.Fields{
-		/* Create new product item
-		http://localhost:8080/product?query=mutation+_{create(name:"Inca Kola",info:"Inca Kola is a soft drink that was created in Peru in 1935 by British immigrant Joseph Robinson Lindley using lemon verbena (wiki)",price:1.99){id,name,info,price}}
-		*/
+
 		"create": &graphql.Field{
 			Type:        productType,
 			Description: "Create new product",
@@ -123,7 +116,7 @@ var mutationType = graphql.NewObject(graphql.ObjectConfig{
 			Resolve: func(params graphql.ResolveParams) (interface{}, error) {
 				rand.Seed(time.Now().UnixNano())
 				product := Product{
-					ID:    int64(rand.Intn(100000)), // generate random ID
+					ID:    int64(rand.Intn(100000)),
 					Name:  params.Args["name"].(string),
 					Info:  params.Args["info"].(string),
 					Price: params.Args["price"].(float64),
@@ -133,9 +126,6 @@ var mutationType = graphql.NewObject(graphql.ObjectConfig{
 			},
 		},
 
-		/* Update product by id
-		   http://localhost:8080/product?query=mutation+_{update(id:1,price:3.95){id,name,info,price}}
-		*/
 		"update": &graphql.Field{
 			Type:        productType,
 			Description: "Update product by id",
@@ -178,9 +168,6 @@ var mutationType = graphql.NewObject(graphql.ObjectConfig{
 			},
 		},
 
-		/* Delete product by id
-		   http://localhost:8080/product?query=mutation+_{delete(id:1){id,name,info,price}}
-		*/
 		"delete": &graphql.Field{
 			Type:        productType,
 			Description: "Delete product by id",
@@ -195,7 +182,7 @@ var mutationType = graphql.NewObject(graphql.ObjectConfig{
 				for i, p := range products {
 					if int64(id) == p.ID {
 						product = products[i]
-						// Remove from product list
+
 						products = append(products[:i], products[i+1:]...)
 					}
 				}
@@ -214,14 +201,8 @@ var schema, _ = graphql.NewSchema(
 )
 
 func executeQuery(query string, schema graphql.Schema) *graphql.Result {
-	result := graphql.Do(graphql.Params{
-		Schema:        schema,
-		RequestString: query,
-	})
-	if len(result.Errors) > 0 {
-		fmt.Printf("errors: %v", result.Errors)
-	}
-	return result
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func main() {

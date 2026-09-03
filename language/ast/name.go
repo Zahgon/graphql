@@ -1,28 +1,13 @@
 package ast
 
-import (
-	"github.com/graphql-go/graphql/language/kinds"
-)
-
-// Name implements Node
 type Name struct {
 	Kind  string
 	Loc   *Location
 	Value string
 }
 
-func NewName(node *Name) *Name {
-	if node == nil {
-		node = &Name{}
-	}
-	node.Kind = kinds.Name
-	return node
-}
+func NewName(node *Name) *Name { _ = "STUB: not implemented"; return nil }
 
-func (node *Name) GetKind() string {
-	return node.Kind
-}
+func (node *Name) GetKind() string { _ = "STUB: not implemented"; return "" }
 
-func (node *Name) GetLoc() *Location {
-	return node.Loc
-}
+func (node *Name) GetLoc() *Location { _ = "STUB: not implemented"; return nil }

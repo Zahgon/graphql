@@ -1,7 +1,6 @@
 package graphql
 
 const (
-	// Operations
 	DirectiveLocationQuery              = "QUERY"
 	DirectiveLocationMutation           = "MUTATION"
 	DirectiveLocationSubscription       = "SUBSCRIPTION"
@@ -10,7 +9,6 @@ const (
 	DirectiveLocationFragmentSpread     = "FRAGMENT_SPREAD"
 	DirectiveLocationInlineFragment     = "INLINE_FRAGMENT"
 
-	// Schema Definitions
 	DirectiveLocationSchema               = "SCHEMA"
 	DirectiveLocationScalar               = "SCALAR"
 	DirectiveLocationObject               = "OBJECT"
@@ -24,18 +22,14 @@ const (
 	DirectiveLocationInputFieldDefinition = "INPUT_FIELD_DEFINITION"
 )
 
-// DefaultDeprecationReason Constant string used for default reason for a deprecation.
 const DefaultDeprecationReason = "No longer supported"
 
-// SpecifiedRules The full list of specified directives.
 var SpecifiedDirectives = []*Directive{
 	IncludeDirective,
 	SkipDirective,
 	DeprecatedDirective,
 }
 
-// Directive structs are used by the GraphQL runtime as a way of modifying execution
-// behavior. Type system creators will usually not create these directly.
 type Directive struct {
 	Name        string      `json:"name"`
 	Description string      `json:"description"`
@@ -45,7 +39,6 @@ type Directive struct {
 	err error
 }
 
-// DirectiveConfig options for creating a new GraphQLDirective
 type DirectiveConfig struct {
 	Name        string              `json:"name"`
 	Description string              `json:"description"`
@@ -53,46 +46,8 @@ type DirectiveConfig struct {
 	Args        FieldConfigArgument `json:"args"`
 }
 
-func NewDirective(config DirectiveConfig) *Directive {
-	dir := &Directive{}
+func NewDirective(config DirectiveConfig) *Directive { _ = "STUB: not implemented"; return nil }
 
-	// Ensure directive is named
-	if dir.err = invariant(config.Name != "", "Directive must be named."); dir.err != nil {
-		return dir
-	}
-
-	// Ensure directive name is valid
-	if dir.err = assertValidName(config.Name); dir.err != nil {
-		return dir
-	}
-
-	// Ensure locations are provided for directive
-	if dir.err = invariant(len(config.Locations) > 0, "Must provide locations for directive."); dir.err != nil {
-		return dir
-	}
-
-	args := []*Argument{}
-
-	for argName, argConfig := range config.Args {
-		if dir.err = assertValidName(argName); dir.err != nil {
-			return dir
-		}
-		args = append(args, &Argument{
-			PrivateName:        argName,
-			PrivateDescription: argConfig.Description,
-			Type:               argConfig.Type,
-			DefaultValue:       argConfig.DefaultValue,
-		})
-	}
-
-	dir.Name = config.Name
-	dir.Description = config.Description
-	dir.Locations = config.Locations
-	dir.Args = args
-	return dir
-}
-
-// IncludeDirective is used to conditionally include fields or fragments.
 var IncludeDirective = NewDirective(DirectiveConfig{
 	Name: "include",
 	Description: "Directs the executor to include this field or fragment only when " +
@@ -110,7 +65,6 @@ var IncludeDirective = NewDirective(DirectiveConfig{
 	},
 })
 
-// SkipDirective Used to conditionally skip (exclude) fields or fragments.
 var SkipDirective = NewDirective(DirectiveConfig{
 	Name: "skip",
 	Description: "Directs the executor to skip this field or fragment when the `if` " +
@@ -128,7 +82,6 @@ var SkipDirective = NewDirective(DirectiveConfig{
 	},
 })
 
-// DeprecatedDirective  Used to declare element of a GraphQL schema as deprecated.
 var DeprecatedDirective = NewDirective(DirectiveConfig{
 	Name:        "deprecated",
 	Description: "Marks an element of a GraphQL schema as no longer supported.",

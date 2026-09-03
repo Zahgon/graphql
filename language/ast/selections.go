@@ -1,19 +1,13 @@
 package ast
 
-import (
-	"github.com/graphql-go/graphql/language/kinds"
-)
-
 type Selection interface {
 	GetSelectionSet() *SelectionSet
 }
 
-// Ensure that all definition types implements Selection interface
 var _ Selection = (*Field)(nil)
 var _ Selection = (*FragmentSpread)(nil)
 var _ Selection = (*InlineFragment)(nil)
 
-// Field implements Node, Selection
 type Field struct {
 	Kind         string
 	Loc          *Location
@@ -24,27 +18,14 @@ type Field struct {
 	SelectionSet *SelectionSet
 }
 
-func NewField(f *Field) *Field {
-	if f == nil {
-		f = &Field{}
-	}
-	f.Kind = kinds.Field
-	return f
-}
+func NewField(f *Field) *Field { _ = "STUB: not implemented"; return nil }
 
-func (f *Field) GetKind() string {
-	return f.Kind
-}
+func (f *Field) GetKind() string { _ = "STUB: not implemented"; return "" }
 
-func (f *Field) GetLoc() *Location {
-	return f.Loc
-}
+func (f *Field) GetLoc() *Location { _ = "STUB: not implemented"; return nil }
 
-func (f *Field) GetSelectionSet() *SelectionSet {
-	return f.SelectionSet
-}
+func (f *Field) GetSelectionSet() *SelectionSet { _ = "STUB: not implemented"; return nil }
 
-// FragmentSpread implements Node, Selection
 type FragmentSpread struct {
 	Kind       string
 	Loc        *Location
@@ -52,31 +33,14 @@ type FragmentSpread struct {
 	Directives []*Directive
 }
 
-func NewFragmentSpread(fs *FragmentSpread) *FragmentSpread {
-	if fs == nil {
-		fs = &FragmentSpread{}
-	}
-	return &FragmentSpread{
-		Kind:       kinds.FragmentSpread,
-		Loc:        fs.Loc,
-		Name:       fs.Name,
-		Directives: fs.Directives,
-	}
-}
+func NewFragmentSpread(fs *FragmentSpread) *FragmentSpread { _ = "STUB: not implemented"; return nil }
 
-func (fs *FragmentSpread) GetKind() string {
-	return fs.Kind
-}
+func (fs *FragmentSpread) GetKind() string { _ = "STUB: not implemented"; return "" }
 
-func (fs *FragmentSpread) GetLoc() *Location {
-	return fs.Loc
-}
+func (fs *FragmentSpread) GetLoc() *Location { _ = "STUB: not implemented"; return nil }
 
-func (fs *FragmentSpread) GetSelectionSet() *SelectionSet {
-	return nil
-}
+func (fs *FragmentSpread) GetSelectionSet() *SelectionSet { _ = "STUB: not implemented"; return nil }
 
-// InlineFragment implements Node, Selection
 type InlineFragment struct {
 	Kind          string
 	Loc           *Location
@@ -85,50 +49,22 @@ type InlineFragment struct {
 	SelectionSet  *SelectionSet
 }
 
-func NewInlineFragment(f *InlineFragment) *InlineFragment {
-	if f == nil {
-		f = &InlineFragment{}
-	}
-	return &InlineFragment{
-		Kind:          kinds.InlineFragment,
-		Loc:           f.Loc,
-		TypeCondition: f.TypeCondition,
-		Directives:    f.Directives,
-		SelectionSet:  f.SelectionSet,
-	}
-}
+func NewInlineFragment(f *InlineFragment) *InlineFragment { _ = "STUB: not implemented"; return nil }
 
-func (f *InlineFragment) GetKind() string {
-	return f.Kind
-}
+func (f *InlineFragment) GetKind() string { _ = "STUB: not implemented"; return "" }
 
-func (f *InlineFragment) GetLoc() *Location {
-	return f.Loc
-}
+func (f *InlineFragment) GetLoc() *Location { _ = "STUB: not implemented"; return nil }
 
-func (f *InlineFragment) GetSelectionSet() *SelectionSet {
-	return f.SelectionSet
-}
+func (f *InlineFragment) GetSelectionSet() *SelectionSet { _ = "STUB: not implemented"; return nil }
 
-// SelectionSet implements Node
 type SelectionSet struct {
 	Kind       string
 	Loc        *Location
 	Selections []Selection
 }
 
-func NewSelectionSet(ss *SelectionSet) *SelectionSet {
-	if ss == nil {
-		ss = &SelectionSet{}
-	}
-	ss.Kind = kinds.SelectionSet
-	return ss
-}
+func NewSelectionSet(ss *SelectionSet) *SelectionSet { _ = "STUB: not implemented"; return nil }
 
-func (ss *SelectionSet) GetKind() string {
-	return ss.Kind
-}
+func (ss *SelectionSet) GetKind() string { _ = "STUB: not implemented"; return "" }
 
-func (ss *SelectionSet) GetLoc() *Location {
-	return ss.Loc
-}
+func (ss *SelectionSet) GetLoc() *Location { _ = "STUB: not implemented"; return nil }

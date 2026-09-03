@@ -1,16 +1,12 @@
 package testutil
 
 import (
-	"encoding/json"
-	"fmt"
-	"reflect"
 	"strconv"
 	"testing"
 
 	"github.com/graphql-go/graphql"
 	"github.com/graphql-go/graphql/gqlerrors"
 	"github.com/graphql-go/graphql/language/ast"
-	"github.com/graphql-go/graphql/language/parser"
 )
 
 var (
@@ -327,178 +323,46 @@ func init() {
 	})
 }
 
-func GetHuman(id int) StarWarsChar {
-	if human, ok := HumanData[id]; ok {
-		return human
-	}
-	return StarWarsChar{}
-}
-func GetDroid(id int) StarWarsChar {
-	if droid, ok := DroidData[id]; ok {
-		return droid
-	}
-	return StarWarsChar{}
-}
-func GetHero(episode interface{}) interface{} {
-	if episode == 5 {
-		return Luke
-	}
-	return Artoo
-}
+func GetHuman(id int) StarWarsChar { _ = "STUB: not implemented"; return *new(StarWarsChar) }
 
-// Test helper functions
+func GetDroid(id int) StarWarsChar { _ = "STUB: not implemented"; return *new(StarWarsChar) }
 
-func TestParse(t *testing.T, query string) *ast.Document {
-	astDoc, err := parser.Parse(parser.ParseParams{
-		Source: query,
-		Options: parser.ParseOptions{
-			// include source, for error reporting
-			NoSource: false,
-		},
-	})
-	if err != nil {
-		t.Fatalf("Parse failed: %v", err)
-	}
-	return astDoc
-}
+func GetHero(episode interface{}) interface{} { _ = "STUB: not implemented"; return nil }
+
+func TestParse(t *testing.T, query string) *ast.Document { _ = "STUB: not implemented"; return nil }
+
 func TestExecute(t *testing.T, ep graphql.ExecuteParams) *graphql.Result {
-	return graphql.Execute(ep)
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func Diff(want, got interface{}) []string {
-	return []string{fmt.Sprintf("\ngot: %v", got), fmt.Sprintf("\nwant: %v\n", want)}
-}
+func Diff(want, got interface{}) []string { _ = "STUB: not implemented"; return nil }
 
-func ASTToJSON(t *testing.T, a ast.Node) interface{} {
-	b, err := json.Marshal(a)
-	if err != nil {
-		t.Fatalf("Failed to marshal Node %v", err)
-	}
-	var f interface{}
-	err = json.Unmarshal(b, &f)
-	if err != nil {
-		t.Fatalf("Failed to unmarshal Node %v", err)
-	}
-	return f
-}
+func ASTToJSON(t *testing.T, a ast.Node) interface{} { _ = "STUB: not implemented"; return nil }
 
 func ContainSubsetSlice(super []interface{}, sub []interface{}) bool {
-	if len(sub) == 0 {
-		return true
-	}
-subLoop:
-	for _, subVal := range sub {
-		found := false
-	innerLoop:
-		for _, superVal := range super {
-			if subVal, ok := subVal.(map[string]interface{}); ok {
-				if superVal, ok := superVal.(map[string]interface{}); ok {
-					if ContainSubset(superVal, subVal) {
-						found = true
-						break innerLoop
-					} else {
-						continue
-					}
-				} else {
-					return false
-				}
-
-			}
-			if subVal, ok := subVal.([]interface{}); ok {
-				if superVal, ok := superVal.([]interface{}); ok {
-					if ContainSubsetSlice(superVal, subVal) {
-						found = true
-						break innerLoop
-					} else {
-						continue
-					}
-				} else {
-					return false
-				}
-			}
-			if reflect.DeepEqual(superVal, subVal) {
-				found = true
-				break innerLoop
-			}
-		}
-		if !found {
-			return false
-		}
-		continue subLoop
-	}
-	return true
+	_ = "STUB: not implemented"
+	return false
 }
 
 func ContainSubset(super map[string]interface{}, sub map[string]interface{}) bool {
-	if len(sub) == 0 {
-		return true
-	}
-	for subKey, subVal := range sub {
-		if superVal, ok := super[subKey]; ok {
-			switch superVal := superVal.(type) {
-			case []interface{}:
-				if subVal, ok := subVal.([]interface{}); ok {
-					if !ContainSubsetSlice(superVal, subVal) {
-						return false
-					}
-				} else {
-					return false
-				}
-			case map[string]interface{}:
-				if subVal, ok := subVal.(map[string]interface{}); ok {
-					if !ContainSubset(superVal, subVal) {
-						return false
-					}
-				} else {
-					return false
-				}
-			default:
-				if !reflect.DeepEqual(superVal, subVal) {
-					return false
-				}
-			}
-		} else {
-			return false
-		}
-	}
-	return true
+	_ = "STUB: not implemented"
+	return false
 }
 
 func EqualErrorMessage(expected, result *graphql.Result, i int) bool {
-	return expected.Errors[i].Message == result.Errors[i].Message
+	_ = "STUB: not implemented"
+	return false
 }
 
 func EqualFormattedError(exp, act gqlerrors.FormattedError) bool {
-	if exp.Message != act.Message {
-		return false
-	}
-	if !reflect.DeepEqual(exp.Locations, act.Locations) {
-		return false
-	}
-	if !reflect.DeepEqual(exp.Path, act.Path) {
-		return false
-	}
-	if !reflect.DeepEqual(exp.Extensions, act.Extensions) {
-		return false
-	}
-	return true
+	_ = "STUB: not implemented"
+	return false
 }
 
 func EqualFormattedErrors(expected, actual []gqlerrors.FormattedError) bool {
-	if len(expected) != len(actual) {
-		return false
-	}
-	for i := range expected {
-		if !EqualFormattedError(expected[i], actual[i]) {
-			return false
-		}
-	}
-	return true
+	_ = "STUB: not implemented"
+	return false
 }
 
-func EqualResults(expected, result *graphql.Result) bool {
-	if !reflect.DeepEqual(expected.Data, result.Data) {
-		return false
-	}
-	return EqualFormattedErrors(expected.Errors, result.Errors)
-}
+func EqualResults(expected, result *graphql.Result) bool { _ = "STUB: not implemented"; return false }

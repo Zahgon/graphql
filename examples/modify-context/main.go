@@ -55,9 +55,7 @@ func main() {
 		log.Fatal(err)
 	}
 	ctx := context.WithValue(context.Background(), "currentUser", User{ID: 100})
-	// Instead of trying to modify context within a resolve function, use:
-	// `graphql.Params.RootObject` is a mutable optional variable and available on
-	// each resolve function via: `graphql.ResolveParams.Info.RootValue`.
+
 	rootObject := map[string]interface{}{
 		"data-before-execution": "ok",
 	}
@@ -71,5 +69,5 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("%s\n", string(b)) // {"data":{"users":[{"id":1}]}}
+	fmt.Printf("%s\n", string(b))
 }

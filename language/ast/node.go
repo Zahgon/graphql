@@ -5,8 +5,6 @@ type Node interface {
 	GetLoc() *Location
 }
 
-// The list of all possible AST node graphql.
-// Ensure that all node types implements Node interface
 var _ Node = (*Name)(nil)
 var _ Node = (*Document)(nil)
 var _ Node = (*OperationDefinition)(nil)

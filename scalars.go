@@ -1,155 +1,13 @@
 package graphql
 
 import (
-	"fmt"
-	"math"
 	"strconv"
-	"time"
 
 	"github.com/graphql-go/graphql/language/ast"
 )
 
-// As per the GraphQL Spec, Integers are only treated as valid when a valid
-// 32-bit signed integer, providing the broadest support across platforms.
-//
-// n.b. JavaScript's integers are safe between -(2^53 - 1) and 2^53 - 1 because
-// they are internally represented as IEEE 754 doubles.
-func coerceInt(value interface{}) interface{} {
-	switch value := value.(type) {
-	case bool:
-		if value == true {
-			return 1
-		}
-		return 0
-	case *bool:
-		if value == nil {
-			return nil
-		}
-		return coerceInt(*value)
-	case int:
-		if value < int(math.MinInt32) || value > int(math.MaxInt32) {
-			return nil
-		}
-		return value
-	case *int:
-		if value == nil {
-			return nil
-		}
-		return coerceInt(*value)
-	case int8:
-		return int(value)
-	case *int8:
-		if value == nil {
-			return nil
-		}
-		return int(*value)
-	case int16:
-		return int(value)
-	case *int16:
-		if value == nil {
-			return nil
-		}
-		return int(*value)
-	case int32:
-		return int(value)
-	case *int32:
-		if value == nil {
-			return nil
-		}
-		return int(*value)
-	case int64:
-		if value < int64(math.MinInt32) || value > int64(math.MaxInt32) {
-			return nil
-		}
-		return int(value)
-	case *int64:
-		if value == nil {
-			return nil
-		}
-		return coerceInt(*value)
-	case uint:
-		if value > math.MaxInt32 {
-			return nil
-		}
-		return int(value)
-	case *uint:
-		if value == nil {
-			return nil
-		}
-		return coerceInt(*value)
-	case uint8:
-		return int(value)
-	case *uint8:
-		if value == nil {
-			return nil
-		}
-		return int(*value)
-	case uint16:
-		return int(value)
-	case *uint16:
-		if value == nil {
-			return nil
-		}
-		return int(*value)
-	case uint32:
-		if value > uint32(math.MaxInt32) {
-			return nil
-		}
-		return int(value)
-	case *uint32:
-		if value == nil {
-			return nil
-		}
-		return coerceInt(*value)
-	case uint64:
-		if value > uint64(math.MaxInt32) {
-			return nil
-		}
-		return int(value)
-	case *uint64:
-		if value == nil {
-			return nil
-		}
-		return coerceInt(*value)
-	case float32:
-		if value < float32(math.MinInt32) || value > float32(math.MaxInt32) {
-			return nil
-		}
-		return int(value)
-	case *float32:
-		if value == nil {
-			return nil
-		}
-		return coerceInt(*value)
-	case float64:
-		if value < float64(math.MinInt32) || value > float64(math.MaxInt32) {
-			return nil
-		}
-		return int(value)
-	case *float64:
-		if value == nil {
-			return nil
-		}
-		return coerceInt(*value)
-	case string:
-		val, err := strconv.ParseFloat(value, 0)
-		if err != nil {
-			return nil
-		}
-		return coerceInt(val)
-	case *string:
-		if value == nil {
-			return nil
-		}
-		return coerceInt(*value)
-	}
+func coerceInt(value interface{}) interface{} { _ = "STUB: not implemented"; return nil }
 
-	// If the value cannot be transformed into an int, return nil instead of '0'
-	// to denote 'no integer found'
-	return nil
-}
-
-// Int is the GraphQL Integer type definition.
 var Int = NewScalar(ScalarConfig{
 	Name: "Int",
 	Description: "The `Int` scalar type represents non-fractional signed whole numeric " +
@@ -167,121 +25,8 @@ var Int = NewScalar(ScalarConfig{
 	},
 })
 
-func coerceFloat(value interface{}) interface{} {
-	switch value := value.(type) {
-	case bool:
-		if value == true {
-			return 1.0
-		}
-		return 0.0
-	case *bool:
-		if value == nil {
-			return nil
-		}
-		return coerceFloat(*value)
-	case int:
-		return float64(value)
-	case *int:
-		if value == nil {
-			return nil
-		}
-		return coerceFloat(*value)
-	case int8:
-		return float64(value)
-	case *int8:
-		if value == nil {
-			return nil
-		}
-		return coerceFloat(*value)
-	case int16:
-		return float64(value)
-	case *int16:
-		if value == nil {
-			return nil
-		}
-		return coerceFloat(*value)
-	case int32:
-		return float64(value)
-	case *int32:
-		if value == nil {
-			return nil
-		}
-		return coerceFloat(*value)
-	case int64:
-		return float64(value)
-	case *int64:
-		if value == nil {
-			return nil
-		}
-		return coerceFloat(*value)
-	case uint:
-		return float64(value)
-	case *uint:
-		if value == nil {
-			return nil
-		}
-		return coerceFloat(*value)
-	case uint8:
-		return float64(value)
-	case *uint8:
-		if value == nil {
-			return nil
-		}
-		return coerceFloat(*value)
-	case uint16:
-		return float64(value)
-	case *uint16:
-		if value == nil {
-			return nil
-		}
-		return coerceFloat(*value)
-	case uint32:
-		return float64(value)
-	case *uint32:
-		if value == nil {
-			return nil
-		}
-		return coerceFloat(*value)
-	case uint64:
-		return float64(value)
-	case *uint64:
-		if value == nil {
-			return nil
-		}
-		return coerceFloat(*value)
-	case float32:
-		return value
-	case *float32:
-		if value == nil {
-			return nil
-		}
-		return coerceFloat(*value)
-	case float64:
-		return value
-	case *float64:
-		if value == nil {
-			return nil
-		}
-		return coerceFloat(*value)
-	case string:
-		val, err := strconv.ParseFloat(value, 0)
-		if err != nil {
-			return nil
-		}
-		return val
-	case *string:
-		if value == nil {
-			return nil
-		}
-		return coerceFloat(*value)
-	}
+func coerceFloat(value interface{}) interface{} { _ = "STUB: not implemented"; return nil }
 
-	// If the value cannot be transformed into an float, return nil instead of '0.0'
-	// to denote 'no float found'
-	return nil
-}
-
-// Float is the GraphQL float type definition.
 var Float = NewScalar(ScalarConfig{
 	Name: "Float",
 	Description: "The `Float` scalar type represents signed double-precision fractional " +
@@ -304,17 +49,8 @@ var Float = NewScalar(ScalarConfig{
 	},
 })
 
-func coerceString(value interface{}) interface{} {
-	if v, ok := value.(*string); ok {
-		if v == nil {
-			return nil
-		}
-		return *v
-	}
-	return fmt.Sprintf("%v", value)
-}
+func coerceString(value interface{}) interface{} { _ = "STUB: not implemented"; return nil }
 
-// String is the GraphQL string type definition
 var String = NewScalar(ScalarConfig{
 	Name: "String",
 	Description: "The `String` scalar type represents textual data, represented as UTF-8 " +
@@ -331,151 +67,8 @@ var String = NewScalar(ScalarConfig{
 	},
 })
 
-func coerceBool(value interface{}) interface{} {
-	switch value := value.(type) {
-	case bool:
-		return value
-	case *bool:
-		if value == nil {
-			return nil
-		}
-		return *value
-	case string:
-		switch value {
-		case "", "false":
-			return false
-		}
-		return true
-	case *string:
-		if value == nil {
-			return nil
-		}
-		return coerceBool(*value)
-	case float64:
-		if value != 0 {
-			return true
-		}
-		return false
-	case *float64:
-		if value == nil {
-			return nil
-		}
-		return coerceBool(*value)
-	case float32:
-		if value != 0 {
-			return true
-		}
-		return false
-	case *float32:
-		if value == nil {
-			return nil
-		}
-		return coerceBool(*value)
-	case int:
-		if value != 0 {
-			return true
-		}
-		return false
-	case *int:
-		if value == nil {
-			return nil
-		}
-		return coerceBool(*value)
-	case int8:
-		if value != 0 {
-			return true
-		}
-		return false
-	case *int8:
-		if value == nil {
-			return nil
-		}
-		return coerceBool(*value)
-	case int16:
-		if value != 0 {
-			return true
-		}
-		return false
-	case *int16:
-		if value == nil {
-			return nil
-		}
-		return coerceBool(*value)
-	case int32:
-		if value != 0 {
-			return true
-		}
-		return false
-	case *int32:
-		if value == nil {
-			return nil
-		}
-		return coerceBool(*value)
-	case int64:
-		if value != 0 {
-			return true
-		}
-		return false
-	case *int64:
-		if value == nil {
-			return nil
-		}
-		return coerceBool(*value)
-	case uint:
-		if value != 0 {
-			return true
-		}
-		return false
-	case *uint:
-		if value == nil {
-			return nil
-		}
-		return coerceBool(*value)
-	case uint8:
-		if value != 0 {
-			return true
-		}
-		return false
-	case *uint8:
-		if value == nil {
-			return nil
-		}
-		return coerceBool(*value)
-	case uint16:
-		if value != 0 {
-			return true
-		}
-		return false
-	case *uint16:
-		if value == nil {
-			return nil
-		}
-		return coerceBool(*value)
-	case uint32:
-		if value != 0 {
-			return true
-		}
-		return false
-	case *uint32:
-		if value == nil {
-			return nil
-		}
-		return coerceBool(*value)
-	case uint64:
-		if value != 0 {
-			return true
-		}
-		return false
-	case *uint64:
-		if value == nil {
-			return nil
-		}
-		return coerceBool(*value)
-	}
-	return false
-}
+func coerceBool(value interface{}) interface{} { _ = "STUB: not implemented"; return nil }
 
-// Boolean is the GraphQL boolean type definition
 var Boolean = NewScalar(ScalarConfig{
 	Name:        "Boolean",
 	Description: "The `Boolean` scalar type represents `true` or `false`.",
@@ -490,7 +83,6 @@ var Boolean = NewScalar(ScalarConfig{
 	},
 })
 
-// ID is the GraphQL id type definition
 var ID = NewScalar(ScalarConfig{
 	Name: "ID",
 	Description: "The `ID` scalar type represents a unique identifier, often used to " +
@@ -511,48 +103,9 @@ var ID = NewScalar(ScalarConfig{
 	},
 })
 
-func serializeDateTime(value interface{}) interface{} {
-	switch value := value.(type) {
-	case time.Time:
-		buff, err := value.MarshalText()
-		if err != nil {
-			return nil
-		}
+func serializeDateTime(value interface{}) interface{} { _ = "STUB: not implemented"; return nil }
 
-		return string(buff)
-	case *time.Time:
-		if value == nil {
-			return nil
-		}
-		return serializeDateTime(*value)
-	default:
-		return nil
-	}
-}
-
-func unserializeDateTime(value interface{}) interface{} {
-	switch value := value.(type) {
-	case []byte:
-		t := time.Time{}
-		err := t.UnmarshalText(value)
-		if err != nil {
-			return nil
-		}
-
-		return t
-	case string:
-		return unserializeDateTime([]byte(value))
-	case *string:
-		if value == nil {
-			return nil
-		}
-		return unserializeDateTime([]byte(*value))
-	case time.Time:
-		return value
-	default:
-		return nil
-	}
-}
+func unserializeDateTime(value interface{}) interface{} { _ = "STUB: not implemented"; return nil }
 
 var DateTime = NewScalar(ScalarConfig{
 	Name: "DateTime",
